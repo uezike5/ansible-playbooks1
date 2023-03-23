@@ -1,10 +1,12 @@
+# ansible g101 -m file -a "path=/home/centos/g101_dir state=directory"
 ---
-- name: Update of group01 servers
-  hosts: group01
+- name: Update g101 servers
+  hosts: g101
+  
 
   tasks:
-    - name: Create Directory
-      file: 
-        path: /home/centos/new_dir
-        state: directory
+  - name: Create Directory
+    file:
+      path: /home/centos/g101_dir
+      state: directory
 ...

@@ -1,0 +1,16 @@
+---
+- name: Deploy Web App
+  hosts: g101
+  become: yes
+
+  tasks:
+  - name: Install GIT
+    yum:
+      name: git
+      state: present
+
+  - name: Host Code
+    git:
+      repo: https://github.com/CeeyIT-Solutions/ecomm.git
+      dest: /var/www/html
+...

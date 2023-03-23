@@ -1,0 +1,56 @@
+- name: Ansible Playbook to Install and Setup Apache on Ubuntu
+  hosts: g2
+  become: yes
+  tasks:
+    - name: Install latest version of Apache
+      apt: name=apache2 update_cache=yes state=latest
+ 
+    - name: Create document root for domain configured in host variable
+      file:
+        path: "/var/www/{{ http_host }}"
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: '0755'
+ 
+    - name: Copy your index file
+      template:
+        src: "files/index-template.html"
+        dest: "/var/www/{{ http_host }}/index.html"
+ 
+    - name: Set up virtuahHost
+      template:
+        src: "files/apache-template.conf"
+        dest: "/etc/apache2/sites-available/{{ http_conf }}"
+ 
+    - name: Enable site
+      command: a2ensite {{ http_conf }}
+      notify: restart-apache
+ 
+    - name: "UFW firewall allow HTTP on port {{ http_port }}"
+      ufw:
+        rule: allow
+        port: "{{ http_port }}"
+        proto: tcp
+ 
+  handlers:
+    - name: restart-apache
+      service:
+        name: apache2
+        state: restarted
+
+
+  tasks:
+  - name: Install git
+    apt:
+      name: git
+      state: present
+
+  tasks:
+  - name: Install tree
+    apt:
+      name: tree
+      state: present
+
+
+...

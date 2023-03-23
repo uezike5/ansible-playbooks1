@@ -1,50 +1,45 @@
 ---
-- name: Update of group01 servers
-  hosts: group01
+- name: Update g101 server
+  hosts: g101
 
   tasks:
-    - name: Create Directory
-      file:
-        path: /home/centos/american2
-        state: directory
+  - name: Create Directory
+    file:
+      path: /home/centos/new_dir
+      state: directory
 
-- name: Update of group02 servers
-  hosts: group02
+  - name: Create Directory
+    file:
+      path: /home/centos/new_dir_1
+      state: directory
 
-  tasks:
-    - name: Create Directory
-      file:
-        path: /home/centos/american1
-        state: directory
-
-- name: Update of group02 servers
-  hosts: group02
+- name: Update g102 server
+  hosts: g102
 
   tasks:
-    - name: Create Directory
-      file:
-        path: /home/centos/american2
-        state: directory
+  - name: Create Directory
+    file:
+      path: /home/centos/new_dir_1
+      state: directory
 
-- name: Install git & tree commands group01 servers
-  hosts: group01
+  - name: Create Directory
+    file:
+      path: /home/centos/new_dir_2
+      state: directory
 
-  tasks:
-    - name: Install git
-      become: yes
-      yum:
-        name: git
-        state: present
 
-- name: Update of group02 servers
-  hosts: group02
+- name: Update group1 servers
+  hosts: g1
 
   tasks:
-    - name: Install git
-      become: yes
-      yum:
-        name: git
-        state: present
+  - name: Create Directory
+    file:
+      path: /home/centos/new_dir_group1
+      state: directory
+
+  - name: Create Directory
+    file:
+      path: /home/centos/new_dir_group2
+      state: directory
 
 ...
-
